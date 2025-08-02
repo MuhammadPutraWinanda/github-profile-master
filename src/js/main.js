@@ -4,6 +4,10 @@ let allUserRepo = [];
 
 const toggleVisibility = (el) => {
   switch (el) {
+    case "loading":
+      document.getElementById(el).classList.toggle("hidden");
+      document.querySelector("h3").classList.add("hidden");
+      break;
     case "h3":
       document.querySelector(el).classList.remove("hidden");
       document.getElementById("userProfile").classList.add("hidden");
@@ -29,6 +33,7 @@ const toggleVisibility = (el) => {
 
 const getUserAccount = (username) => {
   return fetch(`https://api.github.com/users/${username}`)
+    .finally(() => toggleVisibility("loading"))
     .then((res) => {
       if (res.status == 404) {
         throw new Error("Data not found!");
@@ -126,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = inputProfileName.value;
 
     try {
+      toggleVisibility("loading");
       const userData = await getUserAccount(username);
       updateUiProfile(userData);
     } catch (e) {
