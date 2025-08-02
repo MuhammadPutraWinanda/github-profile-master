@@ -157,6 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       toggleVisibility(false, "loading");
       toggleVisibility(true, "h3");
+      toggleVisibility(false, "userProfile");
+      toggleVisibility(false, "userRepos");
       return;
     }
 
