@@ -20,8 +20,108 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- My Own JS -->
     <script defer src="src/js/main.js"></script>
   </head>
-  <body></body>
+  <body>
+    <main class="text-white flex flex-col min-h-screen">
+      <section
+        style="background-image: url(resources/hero-img.jpg)"
+        class="min-h-50 object-cover object-top p-6 md:pt-10"
+      >
+        <form class="relative mx-auto md:w-[60%] lg:w-[40%]">
+          <input
+            type="search"
+            id="inputProfileName"
+            class="bg-slate-800 p-3 outline-none rounded-lg min-w-full peer"
+          />
+          <label
+            for="inputProfileName"
+            id="labelInputProfileName"
+            class="flex items-center gap-2 absolute top-3 left-3 pointer-events-none select-none peer-focus:invisible"
+            ><img src="resources/Search.svg" alt="search icon" class="w-5.5" />
+            username</label
+          >
+        </form>
+      </section>
+
+      <section class="bg-slate-800 px-6 grow-1 lg:px-40">
+        <h3 class="text-white py-5 text-xl lg:text-3xl">
+          Search GitHub Account
+        </h3>
+
+        <div
+          id="userProfile"
+          class="relative -top-6 gap-3.5 md:grid-cols-[120px_170px_150px_280px] hidden"
+        >
+          <div
+            class="profile-img border-7 border-slate-800 rounded-xl w-fit overflow-hidden mb-3.5"
+          >
+            <img
+              id="profileImg"
+              src="https://avatars.githubusercontent.com/u/9919?v=4"
+              alt=""
+              class="max-w-20 lg:max-w-22"
+            />
+          </div>
+          <div
+            class="user-followers bg-slate-950 py-1.5 w-fit rounded-lg md:h-fit md:mt-9"
+          >
+            <span
+              class="py-1 px-4 border-r border-r-white/30 inline-block text-[0.82rem]"
+              >Followers</span
+            >
+            <span id="followers" class="p-2 inline-block text-[0.82rem] px-4"
+              >27839</span
+            >
+          </div>
+          <div
+            class="user-following bg-slate-950 py-1.5 w-fit rounded-lg md:h-fit md:mt-9"
+          >
+            <span
+              class="py-1 px-4 border-r border-r-white/30 inline-block text-[0.82rem]"
+              >Following</span
+            >
+            <span id="following" class="p-2 inline-block text-[0.82rem] px-4"
+              >0</span
+            >
+          </div>
+          <div
+            class="user-location bg-slate-950 py-1.5 w-fit rounded-lg md:h-fit md:mt-9"
+          >
+            <span
+              class="py-1 px-4 border-r border-r-white/30 inline-block text-[0.82rem]"
+              >Location</span
+            >
+            <span id="location" class="p-2 inline-block text-[0.82rem] px-4"
+              >San Francisco, CA</span
+            >
+          </div>
+          <div class="md:col-start-1 md:col-end-4 md:-mt-2.5">
+            <p id="username" class="text-3xl mb-1.5">GitHub</p>
+            <p id="bio" class="text-sm">How people build software.</p>
+          </div>
+        </div>
+
+        <div
+          id="userRepos"
+          class="user-repo mt-2 flex-col gap-8 pb-6 md:pb-12 hidden"
+        >
+          <div
+            style="scrollbar-width: thin"
+            class="card-container grid gap-6 md:grid-cols-2 max-h-147 md:max-h-125 lg:max-h-110 overflow-auto"
+          ></div>
+          <button
+            id="viewAll"
+            class="text-sm w-fit mx-auto cursor-pointer hover:underline hidden"
+          >
+            View all repositories
+          </button>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

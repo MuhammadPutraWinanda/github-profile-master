@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@layer components {
+  .card {
+    @apply bg-[linear-gradient(95deg,#111729_3%,#1d1b48_99.61%)] p-4 rounded-xl flex flex-col gap-3;
+  }
+
+  .repo-description {
+    @apply flex flex-wrap items-center gap-2.5 text-white/70;
+  }
+
+  .repo-description_item {
+    @apply flex items-center gap-1 text-sm;
+  }
+}
