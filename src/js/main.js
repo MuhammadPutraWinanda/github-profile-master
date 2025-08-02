@@ -2,38 +2,53 @@ dayjs.extend(dayjs_plugin_relativeTime);
 
 let allUserRepo = [];
 
-const toggleVisibility = (el) => {
-  switch (el) {
-    case "loading":
-      document.getElementById(el).classList.toggle("hidden");
-      document.querySelector("h3").classList.add("hidden");
-      break;
-    case "h3":
-      document.querySelector(el).classList.remove("hidden");
-      document.getElementById("userProfile").classList.add("hidden");
-      document.getElementById("userProfile").classList.remove("grid");
-      document.getElementById("userRepos").classList.add("hidden");
-      document.getElementById("userRepos").classList.remove("flex");
-      break;
-    case "userProfile":
-      document.querySelector("h3").classList.add("hidden");
-      document.getElementById(el).classList.add("grid");
-      document.getElementById(el).classList.remove("hidden");
-      break;
-    case "userRepos":
-      document.querySelector("h3").classList.add("hidden");
-      document.getElementById(el).classList.add("flex");
-      document.getElementById(el).classList.remove("hidden");
-      break;
-    case "viewAll":
-      document.getElementById(el).classList.toggle("hidden");
-      break;
+const toggleVisibility = (isShow, el) => {
+  if (isShow) {
+    switch (el) {
+      case "loading":
+        document.getElementById(el).classList.remove("hidden");
+        break;
+      case "h3":
+        document.querySelector(el).classList.remove("hidden");
+        break;
+      case "userProfile":
+        document.getElementById(el).classList.add("grid");
+        document.getElementById(el).classList.remove("hidden");
+        break;
+      case "userRepos":
+        document.getElementById(el).classList.add("flex");
+        document.getElementById(el).classList.remove("hidden");
+        break;
+      case "viewAll":
+        document.getElementById(el).classList.remove("hidden");
+        break;
+    }
+  } else {
+    switch (el) {
+      case "loading":
+        document.getElementById(el).classList.add("hidden");
+        break;
+      case "h3":
+        document.querySelector(el).classList.add("hidden");
+        break;
+      case "userProfile":
+        document.getElementById(el).classList.add("hidden");
+        document.getElementById(el).classList.remove("grid");
+        break;
+      case "userRepos":
+        document.getElementById(el).classList.add("hidden");
+        document.getElementById(el).classList.remove("flex");
+        break;
+      case "viewAll":
+        document.getElementById(el).classList.add("hidden");
+        break;
+    }
   }
 };
 
 const getUserAccount = (username) => {
   return fetch(`https://api.github.com/users/${username}`)
-    .finally(() => toggleVisibility("loading"))
+    .finally(() => toggleVisibility(false, "loading"))
     .then((res) => {
       if (res.status == 404) {
         throw new Error("Data not found!");
@@ -112,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const viewAllRepos = document.getElementById("viewAll");
   viewAllRepos.addEventListener("click", () => {
     updateUiRepo("all");
-    toggleVisibility("viewAll");
+    toggleVisibility(false, "viewAll");
   });
 
   const inputProfileName = document.getElementById("inputProfileName");
@@ -131,7 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = inputProfileName.value;
 
     try {
-      toggleVisibility("loading");
+      toggleVisibility(false, "h3");
+      toggleVisibility(true, "loading");
       const userData = await getUserAccount(username);
       updateUiProfile(userData);
     } catch (e) {
@@ -139,17 +155,18 @@ document.addEventListener("DOMContentLoaded", () => {
         title: e,
         icon: "error",
       });
-      toggleVisibility("h3");
+      toggleVisibility(false, "loading");
+      toggleVisibility(true, "h3");
       return;
     }
 
     allUserRepo = await getUserRepo(username);
     updateUiRepo("less");
     if (allUserRepo.length > 4) {
-      toggleVisibility("viewAll");
+      toggleVisibility(true, "viewAll");
     }
 
-    toggleVisibility("userProfile");
-    toggleVisibility("userRepos");
+    toggleVisibility(true, "userProfile");
+    toggleVisibility(true, "userRepos");
   });
 });
